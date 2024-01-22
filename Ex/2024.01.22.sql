@@ -1,4 +1,191 @@
-use hrbd;
+-- like
+select 	first_name, 
+		last_name,
+        salary
+from employees
+where first_name like 'L%';		-- 이름이 L로 시작하는 사람
+
+#이름에 am 을 포함한 사원의 이름과 월급을 출력하세요
+select first_name, salary
+from employees
+where first_name like '%am%';
+
+#이름의 두번째 글자가 a 인 사원의 이름과 월급을 출력하세요
+select first_name, salary
+from employees
+where first_name like '_a%';
+
+#이름의 네번째 글자가 a 인 사원의 이름을 출력하세요
+select first_name, salary
+from employees
+where first_name like '___a%';
+
+#이름이 4글자인 사원중 끝에서 두번째 글자가 a인 사원의 이름을 출력하세요
+select *
+from employees
+where first_name like '_a__';
+
+
+-- null
+select 	first_name, 
+		salary,
+        commission_pct,
+        salary*commission_pct
+from employees
+where salary between 13000 and 15000;
+
+-- is null, is not null
+select *
+from employees
+where commission_pct is null ;   
+# 주의  where commission_pct = null
+
+#커미션비율이 있는 사원의 이름과 월급 커미션비율을 출력하세요
+select 	first_name,
+		salary,
+        commission_pct
+from employees
+where commission_pct is not null ;  
+
+
+#담당매니저가 없고 커미션비율이 없는 직원의 이름과 매니저아이디 커미션 비율을 출력하세요
+select first_name, manager_id, commission_pct
+from employees
+where manager_id is null
+and commission_pct is null;
+
+#부서가 없는 직원의 이름과 월급을 출력하세요
+select first_name, salary, department_id
+from employees
+where department_id is null;
+
+-- ORDER BY 
+select first_name, salary 
+from employees
+where salary >= 10000
+order by salary desc;     -- asc : 오름차순,	desc : 내림차순
+
+select *
+from employees
+order by employee_id asc;
+
+select first_name, salary
+from employees
+order by first_name asc;
+
+select first_name, hire_date
+from employees
+order by hire_date desc;
+
+select first_name, hire_date, salary
+from employees
+order by hire_date desc;
+
+-- 1.최근 입사한 순,  2.입사일이 같으면 월급이 많은사람부터
+select first_name, hire_date, salary
+from employees
+order by hire_date desc, salary desc;
+
+#부서번호를 오름차순으로 정렬하고 부서번호, 월급, 이름을 출력하세요
+select 	department_id,
+		salary,
+		first_name
+from employees
+order by department_id asc;
+
+#월급이 10000 이상인 직원의 이름 월급을 월급이 큰직원부터 출력하세요
+select 	first_name,
+		salary
+from employees
+where salary >= 10000
+order by salary desc;
+
+#부서번호를 오름차순으로 정렬하고 부서번호가 같으면 월급이 높은 사람부터 
+#부서번호 월급 이름을 출력하세요 
+select 	department_id, 
+		salary, 
+        first_name
+from employees
+order by department_id asc, salary desc;
+
+#직원의 이름, 급여, 입사일을 이름의 알파벳 올림차순으로 출력하세요
+select 	first_name,
+		salary,
+        hire_date
+from employees
+order by first_name asc;
+
+#직원의 이름, 급여, 입사일을 입사일이 빠른 사람 부터 출력하세요
+select 	first_name,
+		salary,
+        hire_date
+from employees
+order by hire_date asc; 
+
+select  first_name, 
+		hire_date date, 
+	    department_id 
+from employees 
+where hire_date >='2007-01-01'
+order by date desc;
+
+-- 단일행 함수 > 숫자함수 
+
+-- round() : 정해준 자릿수 밑에서 반올림
+select 	round(123.123, 2),	-- 123.123에서 반올림
+		round(123.126, 2),
+        round(234.567, 0),	-- 반올림 후 정수
+        round(123.456, 0),
+        round(123.456),		-- 정수
+        round(123.126, -1),	-- 123에서 반올림
+        round(125.126, -1),
+        round(123.126, -2)	-- 12에서 반올림
+from dual;
+
+-- tip 콤마 앞에 붙이기
+select 	 round(123.123, 2)
+		,round(123.456)
+        ,round(123.456, 0)
+        ,round(234.567, 0)
+        ,round(123.126, -2)
+        ,round(123.126, -1)
+        ,round(125.126, -1)
+        ,round(123.126, 2)
+from dual;
+
+-- ceil() : 소수 자리 있으면 무조건 일의 자리 하나 올라감
+select 	ceil(123.456),  -- 124
+		ceil(123.789),  -- 124 
+        ceil(123.7892313), -- 124
+        ceil(987.1234),  -- 988
+        ceil(987.1234)  -- 988
+;
+
+-- floor() : 소수 자리 사라짐
+select 	floor(123.456),      -- 123
+		floor(123.789),      -- 123
+        floor(123.7892313),  -- 123
+        floor(987.1234)      -- 987
+;
+
+-- truncate() : 정해준 자릿수 밑의 수 버리기
+select 	truncate (1234.34567, 2),		
+		truncate(1234.34567, 3),
+        truncate(1234.34567, 0),
+        truncate(1235.34567, -2)
+;
+
+select 	first_name, 
+		salary, 
+		ceil(salary/30) as 일당
+from employees
+order by salary desc;
+
+-- POWER(숫자, n),  POW(숫자, n): 숫자의 n승   
+select  pow(12,2), power(12,2);
+
+-- SQRT(숫자): 숫자의 제곱근  
+select  sqrt(144);
 
 -- 양수면 1, 0이면 0, 음수면 -1 출력
 select sign(123),
@@ -167,5 +354,5 @@ select datediff(str_to_date('2021-Jun-04 07:48:52', '%Y-%b-%d'), str_to_date('20
 select format(1234567.89, 3),	-- 소수점 몇 번째 자리까지 나타내겠냐
 		format(1234567.89, 0);	-- 정수로 변환 (반올림) / '-(음수)'넣으면 0과 똑같이 출력
         
-select first_name, ifnull(commision_pct, '0')
+select first_name, ifnull(commission_pct, '0')
 from employees;
