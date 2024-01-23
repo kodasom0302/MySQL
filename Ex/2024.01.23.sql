@@ -20,7 +20,7 @@ select count(*),
 		count(commission_pct)
 from employees;
 
--- 월급이 16000 초과 되는 직원의 수는?
+# 월급이 16000 초과 되는 직원의 수는?
 select count(*)
 from employees
 where salary>16000
@@ -55,3 +55,18 @@ select  department_id
 from employees
 group by department_id	-- 다른 칼럼도 있을 경우 그룹함수 사용 -> 묶음별 row 수가 하나여야 함
 ;
+
+select department_id, job_id, count(*)
+from employees
+group by department_id, job_id
+;
+
+# 월급(salary)의 합계가 20000 이상인 부서의 부서 번호와 , 인원수, 월급합계를 출력하세요
+select department_id, count(*), sum(salary)
+from employees
+where sum(salary)>=20000
+group by department_id
+;
+
+select *
+from employees;
