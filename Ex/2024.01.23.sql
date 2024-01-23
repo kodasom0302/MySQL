@@ -120,7 +120,28 @@ from employees
 */
 select  first_name,
 		department_id,
-		case when 10<=department_id<=50 then 'A-TEAM'
-			 when 
+		case when department_id between 10 and 50 then 'A-TEAM'
+			 when department_id between 60 and 100 then 'B-TEAM'
+             when department_id between 110 and 150 then 'C-TEAM'
+             else department_id
+		end 부서번호
 from employees
+;
+
+-- 테이블 여러 개 합치기
+#사원 이름, 부서 번호
+select  first_name,
+		department_id
+from employees
+;
+#부서명
+select *
+from departments
+;
+
+select  first_name,
+		department_name,
+        e.department_id,		-- employees 테이블에 있는 department_id
+        d.department_id
+from employees e, departments d
 ;
