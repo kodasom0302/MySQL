@@ -64,9 +64,22 @@ group by department_id, job_id
 # 월급(salary)의 합계가 20000 이상인 부서의 부서 번호와 , 인원수, 월급합계를 출력하세요
 select department_id, count(*), sum(salary)
 from employees
-where sum(salary)>=20000
+where sum(salary)>=20000	-- where절에는 그룹함수 사용 불가능 -> 합계 계산 전 where절 사용
 group by department_id
 ;
 
-select *
-from employees;
+-- 조건 달기/구간 지정하기
+select department_id, count(*), sum(salary)
+from employees
+group by department_id
+having sum(salary)>=20000	-- having절에는 그룹함수, group by에 참려한 컬럼만 사용 가능
+;
+
+# 월급(salary)의 합계가 20000 이상이면서 부서 번호가 100인 부서의 부서 번호와 , 인원수, 월급합계를 출력하세요
+select department_id, count(*), sum(salary)
+from employees
+-- where department_id=100		-- 부서 번호가 100인 컬럼만 출력
+group by department_id
+having sum(salary)>=20000	-- having절에는 그룹함수, group by에 참려한 컬럼만 사용 가능
+-- and department_id=100
+;
