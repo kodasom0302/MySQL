@@ -118,13 +118,13 @@ from employees
 나머지는 '팀없음'
 으로 출력하세요.
 */
-select  first_name,
-		department_id,
+select  first_name 이름,
+		department_id 부서번호,
 		case when department_id between 10 and 50 then 'A-TEAM'
 			 when department_id between 60 and 100 then 'B-TEAM'
              when department_id between 110 and 150 then 'C-TEAM'
-             else department_id
-		end 부서번호
+             else '팀없음'
+		end 팀
 from employees
 ;
 
@@ -163,4 +163,26 @@ select  first_name,
 from employees e, departments d, jobs j
 where e.department_id=d.department_id
 and e.job_id=j.job_id
+;
+select  first_name,
+		department_name,
+        job_title
+from employees e
+join departments d
+	on e.department_id=d.department_id
+join jobs j
+	on e.job_id=j.job_id
+;
+
+# 이름, 부서번호, 부서명, 업무아이디, 업무명, 도시아이디, 도시명
+select  first_name,
+		d.department_id,
+        j.job_id,
+        job_title,
+        l.location_id,
+        city
+from employees e, departments d, jobs j, locations l
+where e.department_id=d.department_id
+and e.job_id=j.job_id
+and d.location_id=l.location_id
 ;
