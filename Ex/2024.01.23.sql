@@ -144,4 +144,23 @@ select  first_name,
         e.department_id,		-- employees 테이블에 있는 department_id
         d.department_id
 from employees e, departments d
+where e.department_id=d.department_id
+;
+-- EQ Join => where절로도 사용 ( 가장 많이 쓰는 형태 )
+select  first_name,
+		department_name,
+        e.department_id,
+        d.department_id
+from employees e
+inner join departments d	-- inner 생략 가능
+	on e.department_id=d.department_id
+;
+
+# 모든 직원이름, 부서이름, 업무명 을 출력하세요 *3개의 테이블
+select  first_name,
+		department_name,
+        job_title
+from employees e, departments d, jobs j
+where e.department_id=d.department_id
+and e.job_id=j.job_id
 ;
