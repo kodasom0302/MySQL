@@ -31,14 +31,16 @@ left join employees e
 ;
 
 -- 이어붙이기
-(select  e.department_id,
+(select e.employee_id,
+		e.department_id,
 		first_name,
         department_name
 from employees e
 left join departments d
 	on e.department_id=d.department_id)
 union
-(select  e.department_id,
+(select e.employee_id,
+		e.department_id,
 		first_name,
         department_name
 from employees e
@@ -68,4 +70,28 @@ select  first_name,
         city
 from employees e, locations l
 where e.salary=l.location_id
+;
+
+-- 질의문 안에 또 다른 질의문 넣기
+# 'Den' 보다 월급이 많은 사람의 이름과 월급은?
+-- Den의 월급을 구한다
+select  first_name,
+		salary
+from employees
+where first_name='Den'
+;
+-- 전체
+select  first_name,
+		salary
+from employees
+where salary>=11000
+;
+
+-- 합치기
+select  first_name,
+		salary
+from employees
+where salary>=( select salary
+				from employees
+				where first_name='Den')
 ;
