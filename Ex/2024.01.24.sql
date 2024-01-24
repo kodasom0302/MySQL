@@ -13,3 +13,18 @@ from employees e
 left join departments d
 	on e.department_id=d.department_id
 ;
+
+-- right outer join을 중심으로 오른쪽 테이블이 기준
+select *
+from employees e
+right outer join departments d		-- outer 생략 가능
+	on e.department_id=d.department_id
+;
+
+select  first_name,
+		e.department_id,
+        department_name
+from departments d
+left join employees e
+	on e.department_id=d.department_id
+;
