@@ -54,6 +54,18 @@ select  employee_id,
 from employees
 ;
 
-select *
-from departments
+select  e.employee_id,
+		e.first_name,
+        m.first_name manager_name
+from employees e, employees m
+where e.manager_id=m.manager_id
+;
+
+select  first_name,
+		salary,
+		location_id,
+        street_address,
+        city
+from employees e, locations l
+where e.salary=l.location_id
 ;
