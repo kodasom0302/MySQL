@@ -21,10 +21,39 @@ right outer join departments d		-- outer 생략 가능
 	on e.department_id=d.department_id
 ;
 
+-- left>right로 바꿀 때 테이블 순서 바꾸고 join 바꾸면 결과값 동일하게 됨
 select  first_name,
 		e.department_id,
         department_name
 from departments d
 left join employees e
 	on e.department_id=d.department_id
+;
+
+-- 이어붙이기
+(select  e.department_id,
+		first_name,
+        department_name
+from employees e
+left join departments d
+	on e.department_id=d.department_id)
+union
+(select  e.department_id,
+		first_name,
+        department_name
+from employees e
+right join departments d
+	on e.department_id=d.department_id)
+;
+
+select  employee_id,
+		first_name,
+		manager_id,
+        department_id,
+        job_id
+from employees
+;
+
+select *
+from departments
 ;
