@@ -146,7 +146,7 @@ select  first_name,
 from employees e, departments d
 where e.department_id=d.department_id
 ;
--- EQ Join => where절로도 사용 ( 가장 많이 쓰는 형태 )
+-- inner(equi) Join => where절로도 사용 ( 가장 많이 쓰는 형태 )
 select  first_name,
 		department_name,
         e.department_id,
@@ -177,6 +177,7 @@ join jobs j
 # 이름, 부서번호, 부서명, 업무아이디, 업무명, 도시아이디, 도시명
 select  first_name,
 		d.department_id,
+        d.department_name,
         j.job_id,
         job_title,
         l.location_id,
@@ -185,4 +186,17 @@ from employees e, departments d, jobs j, locations l
 where e.department_id=d.department_id
 and e.job_id=j.job_id
 and d.location_id=l.location_id
+;
+-- 위 문제 join문으로
+select  first_name,
+		d.department_id,
+        d.department_name,
+        j.job_id,
+        job_title,
+        l.location_id,
+        city
+from employees e
+inner join departments d on e.department_id=d.department_id
+join locations l on d.location_id=l.location_id
+join jobs j on e.job_id=j.job_id
 ;
