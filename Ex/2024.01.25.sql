@@ -125,10 +125,33 @@ where (department_id, salary)  in  (select  department_id,
 
 -- 없는 테이블 제작
 select *
-from employees e, (select  	department_id,
+from employees e, (select  	department_id,		-- join하겠다
 							max(salary) salary
 							from employees
 							group by department_id) s
 where e.department_id=s.department_id
 and e.salary=s.salary
+;
+
+-- x부터 y개까지의 row만 출력
+select *
+from employees
+order by employee_id asc
+limit 1, 10
+;
+-- y부터 x개까지의 row 출력
+select *
+from employees
+order by employee_id asc
+limit 5 offset 2
+;
+
+# 07년에 입사한 직원중 급여가 많은 직원중 3에서 7등의 이름, 급여, 입사일은?
+select  first_name,
+		salary,
+		hire_date
+from employees
+where hire_date between '2007/01/01' and '2007/12/31'
+order by salary desc
+limit 2, 5
 ;
