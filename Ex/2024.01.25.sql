@@ -69,12 +69,54 @@ select  first_name,
 		salary,
         department_id
 from employees
-where salary in (select max(salary)
-				from employees e
-                group by department_id)
+where (department_id, salary)in(select  department_id,
+										max(salary)
+								from employees
+								group by department_id)
 ;
 
-select  department_name,
-		max(salary)
-from employees e, departments d
-group by department_name
+# 월급 최저인 직원의 이름과 월급은?
+select  first_name,
+		salary
+from employees
+where salary = (select min(salary)
+				from employees)
+;
+
+-- 월급이 15000보다 큰 직원의 이름, 월급을 출력하세요
+select  first_name,
+		salary
+from employees
+where salary>15000
+;
+
+/*
+부서번호가 110인 직원의 급여 보다 큰 모든 직원의
+이름, 급여를 출력하세요.(or연산--> 8300보다 큰)
+*/
+-- 부서번호가 110인 직원의 월급
+select  first_name,
+		salary
+from employees
+where department_id=110
+;
+
+select  first_name,
+		salary
+from employees
+where salary >any (select salary
+				 from employees
+                 where department_id=110)
+;	-- in은 같은 경우에만 가능 / 크거나 작은 건 불가능 -> any = or (느슨)
+
+/*
+부서번호가 110인 직원의 급여 보다 큰 모든 직원의
+이름, 급여를 출력하세요.(and연산--> 12008보다 큰)
+*/
+select  first_name,
+		salary
+from employees
+where salary >all  (select salary	-- all = and (깐깐)
+					from employees
+					where department_id=110)
+;
