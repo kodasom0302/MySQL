@@ -83,7 +83,7 @@ where salary = (select min(salary)
 				from employees)
 ;
 
--- 월급이 15000보다 큰 직원의 이름, 월급을 출력하세요
+# 월급이 15000보다 큰 직원의 이름, 월급을 출력하세요
 select  first_name,
 		salary
 from employees
@@ -94,13 +94,6 @@ where salary>15000
 부서번호가 110인 직원의 급여 보다 큰 모든 직원의
 이름, 급여를 출력하세요.(or연산--> 8300보다 큰)
 */
--- 부서번호가 110인 직원의 월급
-select  first_name,
-		salary
-from employees
-where department_id=110
-;
-
 select  first_name,
 		salary
 from employees
@@ -119,4 +112,23 @@ from employees
 where salary >all  (select salary	-- all = and (깐깐)
 					from employees
 					where department_id=110)
+;
+
+# 각 부서별로 최고급여를 받는 사원을 출력하세요
+select *
+from employees
+where (department_id, salary)  in  (select  department_id,
+											max(salary)
+									from employees
+									group by department_id)
+;
+
+-- 없는 테이블 제작
+select *
+from employees e, (select  	department_id,
+							max(salary) salary
+							from employees
+							group by department_id) s
+where e.department_id=s.department_id
+and e.salary=s.salary
 ;
